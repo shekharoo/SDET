@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * @author SHEKHAR
@@ -78,18 +82,64 @@ public class WebDriverUtils {
 	//wait for test load() to use implicitlywait and explicitly wait
 	/**
 	 * @author SHEKHAR
+	 * @param driver
 	 * @param element
-	 * @param sec
 	 */
-//	public WebElement driverWait(WebDriver driver,WebElement element,long sec,String expLink)
-//	{
-//		WebDriverWait wait = new WebDriverWait(driver, sec);
-//		//wait.until(ExpectedConditions.visibilityOf(element));
-//		String actLink = element.getText();
-//		System.out.println("Actual Link Text is: "+actLink);
-//		wait.until(ExpectedConditions.refreshed(element));
-//		return element;
-//	}
+	public void driverWait(WebDriver driver,WebElement element)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	/**
+	 * @author SHEKHAR
+	 * @param driver
+	 * @param element
+	 */
+	public void driverWaitCustom(WebDriver driver,WebElement element,String expText)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 30);
+		wait.until(ExpectedConditions.textToBePresentInElement(element, expText));
+	}
+	
+	/**
+	 * @author SHEKHAR
+	 * @param driver
+	 * @param element
+	 * @throws InterruptedException 
+	 */
+	public void waitAndClickElement(WebDriver driver,WebElement element,WebElement chkbox) throws InterruptedException
+	{
+		//boolean flag = false;
+		int count=0;
+		while(count<30)
+		{
+		try {
+			if(element.isDisplayed())
+			{
+				chkbox.click();
+			}
+				
+			//flag=true;
+			break;
+		} catch (Exception e) {
+			count++;
+			Thread.sleep(1000);
+		 }
+		}
+
+	}
+	
+	
+	/**
+	 * @author SHEKHAR
+	 * @param element
+	 */
+	public void driverWaitAlert(WebDriver driver)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.alertIsPresent());
+	}
+	
 	/**
 	 * @author SHEKHAR
 	 * @param element
@@ -129,7 +179,7 @@ public class WebDriverUtils {
 		for(String w:whs)
 		{
 			driver.switchTo().window(w);
-		    driver.findElement(By.name("search_text")).sendKeys(FileLib.readPropertyFile("searchVal"));
+		    driver.findElement(By.name("search_text")).sendKeys(expTitle);
 	    }
 		
 	}
@@ -143,5 +193,26 @@ public class WebDriverUtils {
 	{
 		Actions action = new Actions(driver);
 		action.moveToElement(element).perform();
+	}
+	/**
+	 * Used to accept Pop up
+	 * @param driver
+	 *@author SHEKHAR
+	 */
+	public void popUpAccept(WebDriver driver)
+	{
+		Alert a = driver.switchTo().alert();
+		a.accept();
+	}
+	
+	/**
+	 * used to dismiss Pop up
+	 * @param driver
+	 * @author SHEKHAR
+	 */
+	public void popUpDismiss(WebDriver driver)
+	{
+		Alert a = driver.switchTo().alert();
+		a.dismiss();
 	}
 }

@@ -2,6 +2,7 @@ package com.vtiger.genericUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -11,7 +12,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class ExcelLib {
-	public static String[][] getData(String pathName, String sheetName) {
+	/** used to read the data from excel workbook based on
+	 * @author SHEKHAR
+	 * @param pathName
+	 * @param sheetName
+	 * @return String[][]
+	 */
+	public static String pathName = "./testData/testScriptData.xlsx";
+	public static String[][] getData(String sheetName) {
 
         String[][] data = null;
         int k = 0;
@@ -62,5 +70,38 @@ public class ExcelLib {
     }
 
 	
-	//Write data into excel also
+	/**
+	 * used to set data back to excel based on parameter
+	 * @param shettName
+	 * @param rowNum
+	 * @param colNum
+	 * @param data
+	 * @throws Throwable
+	 */
+	
+	public void setExcelData(String sheetName , int rowNum , int colNum ,String data) throws Throwable {
+		FileInputStream fis = new FileInputStream(pathName);
+		Workbook wb = WorkbookFactory.create(fis);
+		Sheet sh = wb.getSheet(sheetName);
+		Row row = sh.getRow(rowNum);
+		Cell cel = row.createCell(colNum);
+		cel.setCellValue(data);
+		FileOutputStream fos = new FileOutputStream(pathName);
+				wb.write(fos);
+		wb.close();
+	}
+	/**
+	 * used to get the excel used row count
+	 * @param shettName
+	 * @return
+	 * @throws Throwable
+	 */
+	public int getRowCount(String shettName)throws Throwable {
+		FileInputStream fis = new FileInputStream(pathName);
+		Workbook wb = WorkbookFactory.create(fis);
+		Sheet sh = wb.getSheet(shettName);
+		return sh.getLastRowNum();
+				
+	}
+
 }
