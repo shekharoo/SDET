@@ -1,55 +1,53 @@
-package com.vtiger;
+package com.vtiger.contact;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+import com.vtiger.genericUtils.BaseClass;
 import com.vtiger.genericUtils.FileLib;
 import com.vtiger.genericUtils.WebDriverUtils;
 
-public class createContactWithOrganization {
+public class createContactWithOrganization extends BaseClass{
 	
-	public WebDriver driver;
 	String pwh;
 	
-	WebDriverUtils wdu = new WebDriverUtils();
+	//WebDriverUtils wdu = new WebDriverUtils();
 	
-	/**
-	 * @throws IOException
-	 * @throws InterruptedException
-	 * @throws SQLException 
-	 */
+/**
+ * @author SHEKHAR
+ * @throws Throwable
+ */
 	@Test
-	public void test_001() throws Throwable
+	public void test_01() throws Throwable
 	{
-		
-		driver = wdu.openBrowser("chrome");
-		wdu.openUrl(FileLib.readPropertyFile("url"));
-		wdu.testLoad();
-		driver.findElement(By.name("user_name")).sendKeys(FileLib.readPropertyFile("username"));
-		driver.findElement(By.name("user_password")).sendKeys(FileLib.readPropertyFile("password"));
-		driver.findElement(By.id("submitButton")).click();
+		/* read test script specific data*/
+		 String orgName = excelLib.getExcelData("Org", 1, 2)+"_"+WebDriverUtils.randomFunc();
+		 String org_Type = excelLib.getExcelData("Org", 1, 3);
+		 String org_industry = excelLib.getExcelData("Org", 1, 4);
+		 
+		 //Step 3:
+		//click on Organization Tab
 		
 		driver.findElement(By.linkText("Organizations")).click();
 		driver.findElement(By.xpath("//img[@alt='Create Organization...']")).click();
-		String orgName = FileLib.readPropertyFile("orgName")+"_"+WebDriverUtils.randomFunc();
 		driver.findElement(By.name("accountname")).sendKeys(orgName);
 		
 		//Select Industry and Type
 		WebElement industry = driver.findElement(By.name("industry"));
 		WebElement accType = driver.findElement(By.name("accounttype"));
-		wdu.dropDownSelect(industry,FileLib.readPropertyFile("industry") );
-		wdu.dropDownSelect(accType, FileLib.readPropertyFile("acc_Type"));
+		wdu.dropDownSelect(industry,org_industry );
+		wdu.dropDownSelect(accType, org_Type);
 		
 		//Click on Save
 		driver.findElement(By.name("button")).click();
+		
+		//Step 4:
 		
 		//verfication if organization name is same
 		WebElement orgEle = driver.findElement(By.className("dvHeaderText"));
 		wdu.verifyTitle(orgEle, orgName);
 	
+		//Step 5:
 		//Click on Contacts link
 		driver.findElement(By.linkText("Contacts")).click();
 		
@@ -98,10 +96,7 @@ public class createContactWithOrganization {
 		WebElement contactEle = driver.findElement(By.xpath("//span[@class='dvHeaderText']"));
 		wdu.verifyTitle(contactEle, FileLib.readPropertyFile("expContactName"));
 		
-		//Mouse hover for logout
-		WebElement mouseHovEle = driver.findElement(By.xpath("//img[@src='themes/softed/images/user.PNG']"));
-		wdu.mouseHover(driver, mouseHovEle);
-		driver.findElement(By.linkText("Sign Out")).click();
+
 	}
 
 }

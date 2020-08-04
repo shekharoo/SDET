@@ -130,7 +130,10 @@ public class DataBaseLib {
 			System.out.println("Expected value does not matches with the actual value");
 		}
 	}
-
+	public void closeConn() throws SQLException
+	{
+		con.close();
+	}
 
 
 }
