@@ -20,9 +20,7 @@ public class DeleteContactwithOrganizationTest {
 	
 	/**
 	 * @author SHEKHAR
-	 * @throws IOException
-	 * @throws InterruptedException
-	 * @throws SQLException 
+	 * @throws Throwable
 	 */
 	@Test
 	public void test_001() throws Throwable

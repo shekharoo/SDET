@@ -18,11 +18,10 @@ public class DeleteOrganization {
 	
 	WebDriverUtils wdu = new WebDriverUtils();
 	
-	/**
-	 * @throws IOException
-	 * @throws InterruptedException
-	 * @throws SQLException 
-	 */
+    /**
+     * @author SHEKHAR
+     * @throws Throwable
+     */
 	@Test
 	public void test_001() throws Throwable
 	{
