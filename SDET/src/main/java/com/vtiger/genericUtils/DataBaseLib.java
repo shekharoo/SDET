@@ -13,7 +13,7 @@ import com.mysql.cj.jdbc.Driver;
  */
 public class DataBaseLib {
 	
-	Connection con;
+	
 	/**@author SHEKHAR
 	 * Method is used to establish Database Connection
 	 * @param url
@@ -22,6 +22,7 @@ public class DataBaseLib {
 	 * @return Statement
 	 * @throws SQLException
 	 */
+	Connection con;
 	public Statement establishConn(String url,String username,String psswd) throws SQLException
 	{
 		Driver driver = new Driver();

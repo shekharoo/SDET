@@ -16,17 +16,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * @author SHEKHAR
- *
- */
 public class WebDriverUtils {
 	
-	/**
-	 * 
-	 */
 	public static WebDriver driver;
 	/**
+	 * It is used to open browser
 	 * @author SHEKHAR
 	 * @param browserName
 	 * @return WebDriver
@@ -37,13 +31,14 @@ public class WebDriverUtils {
 		{
 			driver = new ChromeDriver();
 		}
-		if(browserName.equals("firefox"))
+		else if(browserName.equals("firefox"))
 		{
 			driver = new FirefoxDriver();
 		}
 		return driver;
 	}
 	/**
+	 * It is used to open url and maximize window
 	 * @author SHEKHAR
 	 * @param url
 	 */
@@ -52,12 +47,19 @@ public class WebDriverUtils {
 		driver.manage().window().maximize();
 		driver.get(url);
 	}
-
+    /**
+     * It is used to apply implicit wait to DOM page. 
+     * @author SHEKHAR
+     */
 	public void testLoad()
 	{
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
-	
+	/**
+	 * It is used to generate random numbers. 
+	 * @author SHEKHAR
+	 * @return int
+	 */
 	public static int randomFunc()
 	{
 		Random r = new Random();
@@ -65,6 +67,7 @@ public class WebDriverUtils {
 		return no;
 	}
 	/**
+	 * It is sued to select drop down based on Text
 	 * @author SHEKHAR
 	 * @param element
 	 * @param text
@@ -74,13 +77,21 @@ public class WebDriverUtils {
 		Select s = new Select(element);
 		s.selectByVisibleText(text);
 	}
-	//handle drop down
-	//handle pop-up
-	//select data from drop down
-	//Action class
-	
-	//wait for test load() to use implicitlywait and explicitly wait
 	/**
+	 * It is sued to select drop down based on Value
+	 * @author SHEKHAR
+	 * @param element
+	 * @param value
+	 */
+	public void dropDownSelectByValue(WebElement element,String value)
+	{
+		Select s = new Select(element);
+		s.selectByValue(value);
+	}
+
+	
+	/**
+	 * It is sued to apply explicit wait on a particular element.
 	 * @author SHEKHAR
 	 * @param driver
 	 * @param element
@@ -91,6 +102,7 @@ public class WebDriverUtils {
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	/**
+	 * It is used to apply wait explicit wait based on element's text.
 	 * @author SHEKHAR
 	 * @param driver
 	 * @param element
@@ -102,6 +114,7 @@ public class WebDriverUtils {
 	}
 	
 	/**
+	 * It is used to apply wait on an element and perform click operation.
 	 * @author SHEKHAR
 	 * @param driver
 	 * @param element
@@ -131,6 +144,7 @@ public class WebDriverUtils {
 	
 	
 	/**
+	 * It is used to apply explicit wait on Alert
 	 * @author SHEKHAR
 	 * @param element
 	 */
@@ -141,6 +155,7 @@ public class WebDriverUtils {
 	}
 	
 	/**
+	 * it is used to verify title based on expected title.
 	 * @author SHEKHAR
 	 * @param element
 	 * @param expTitle
@@ -158,6 +173,7 @@ public class WebDriverUtils {
 		}
 	}
 	/**
+	 * It is used to switch to Parent Window.
 	 * @author SHEKHAR
 	 * @param pwh
 	 */
@@ -166,7 +182,7 @@ public class WebDriverUtils {
 		driver.switchTo().window(pwh);
 		
 	}
-	/**This is used to switch window
+	/**This is used to switch child window
 	 * @author SHEKHAR
 	 * @param expTitle
 	 * @throws IOException

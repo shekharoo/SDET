@@ -22,7 +22,7 @@ public class createContactWithOrganization {
 	 * @throws SQLException 
 	 */
 	@Test
-	public void test_001() throws IOException, InterruptedException, SQLException
+	public void test_001() throws Throwable
 	{
 		
 		driver = wdu.openBrowser("chrome");
@@ -99,7 +99,7 @@ public class createContactWithOrganization {
 		wdu.verifyTitle(contactEle, FileLib.readPropertyFile("expContactName"));
 		
 		//Mouse hover for logout
-		WebElement mouseHovEle = driver.findElement(By.xpath("(//td[@class='small'])[2]/img"));
+		WebElement mouseHovEle = driver.findElement(By.xpath("//img[@src='themes/softed/images/user.PNG']"));
 		wdu.mouseHover(driver, mouseHovEle);
 		driver.findElement(By.linkText("Sign Out")).click();
 	}

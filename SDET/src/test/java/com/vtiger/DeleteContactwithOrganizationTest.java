@@ -19,21 +19,28 @@ public class DeleteContactwithOrganizationTest {
 	WebDriverUtils wdu = new WebDriverUtils();
 	
 	/**
+	 * @author SHEKHAR
 	 * @throws IOException
 	 * @throws InterruptedException
 	 * @throws SQLException 
 	 */
 	@Test
-	public void test_001() throws IOException, InterruptedException, SQLException
+	public void test_001() throws Throwable
 	{
-		
+		//Step 1:
+		//Open brower and apply implicit wait
 		driver = wdu.openBrowser("chrome");
 		wdu.openUrl(FileLib.readPropertyFile("url"));
 		wdu.testLoad();
+		
+		//Step 2:
+		//Enter username and password.
 		driver.findElement(By.name("user_name")).sendKeys(FileLib.readPropertyFile("username"));
 		driver.findElement(By.name("user_password")).sendKeys(FileLib.readPropertyFile("password"));
 		driver.findElement(By.id("submitButton")).click();
 		
+		//Step 3:
+		//click on Organization tab
 		driver.findElement(By.linkText("Organizations")).click();
 		driver.findElement(By.xpath("//img[@alt='Create Organization...']")).click();
 		String orgName = FileLib.readPropertyFile("orgName")+"_"+WebDriverUtils.randomFunc();
@@ -48,17 +55,20 @@ public class DeleteContactwithOrganizationTest {
 		//Click on Save
 		driver.findElement(By.name("button")).click();
 		
+		//Step 4:
 		//verfication if organization name is same
 		String actOrgName = driver.findElement(By.className("dvHeaderText")).getText();
 		
 		Assert.assertTrue(actOrgName.contains(orgName));
 		
-		//Click on Contacts link
+		//Step 5:
+		//Click on Contacts link to create new Contact
 		driver.findElement(By.linkText("Contacts")).click();
 				
 		//Click on new Contact button
 		driver.findElement(By.xpath("//img[@alt='Create Contact...']")).click();
-				
+		
+		//Step 6:
 		//Select Title
 		WebElement salutation = driver.findElement(By.name("salutationtype"));
 		wdu.dropDownSelect(salutation, FileLib.readPropertyFile("salutation"));
@@ -94,17 +104,20 @@ public class DeleteContactwithOrganizationTest {
 				
 		//Click on Save button, to save Contact
 		driver.findElement(By.name("button")).click();
-				
+		
+		//Step 7:
 		//Verify if contact name is same
 		WebElement contactEle = driver.findElement(By.xpath("//span[@class='dvHeaderText']"));
 		wdu.verifyTitle(contactEle, FileLib.readPropertyFile("expContactName"));
-				
+		
+		//Step 8:
 		//delete contact
 		driver.findElement(By.linkText("Contacts")).click();
 		driver.findElement(By.name("search_text")).sendKeys(orgName);
 		WebElement orgDrpDownSrch = driver.findElement(By.id("bas_searchfield"));
 		wdu.dropDownSelect(orgDrpDownSrch, FileLib.readPropertyFile("orgDrpDownText"));
 		
+		//Step 9:
 		//click on search button
 		driver.findElement(By.name("submit")).click();
 		
@@ -121,6 +134,7 @@ public class DeleteContactwithOrganizationTest {
 		wdu.driverWaitAlert(driver);
 		wdu.popUpAccept(driver);
 		
+		//Step 10:
 		//verify contact is deleted
 		driver.findElement(By.linkText("Contacts")).click();
 		driver.findElement(By.name("search_text")).sendKeys(orgName);
@@ -130,12 +144,13 @@ public class DeleteContactwithOrganizationTest {
 		//click on search button
 		driver.findElement(By.name("submit")).click();
 		
+		//Step 11:
 		//capture no contact text
 		String actContactMsg = driver.findElement(By.xpath("//span[@class='genHeaderSmall']")).getText();
 		Assert.assertTrue(actContactMsg.contains(FileLib.readPropertyFile("expContactMsg")));
 		System.out.println("Message is: "+ actContactMsg + " with given contact search: "+ FileLib.readPropertyFile("firstName"));
 		
-		
+		//Step 12:
 		//search for organization created
 		driver.findElement(By.linkText("Organizations")).click();
 		driver.findElement(By.name("search_text")).sendKeys(orgName);
@@ -158,6 +173,7 @@ public class DeleteContactwithOrganizationTest {
 		wdu.driverWaitAlert(driver);
 		wdu.popUpAccept(driver);
 		
+		//Step 13:
 		//verify organization is deleted
 		driver.findElement(By.linkText("Organizations")).click();
 		driver.findElement(By.name("search_text")).sendKeys(orgName);
@@ -167,11 +183,13 @@ public class DeleteContactwithOrganizationTest {
 		//click on search button
 		driver.findElement(By.name("submit")).click();
 		
+		//Step 14:
 		//capture no oraganization text
 		String actOrgMsg = driver.findElement(By.xpath("//span[@class='genHeaderSmall']")).getText();
 		Assert.assertTrue(actOrgMsg.contains(FileLib.readPropertyFile("expOrgMsg")));
 		System.out.println("Message is: "+actOrgMsg + " with given org search: "+ orgName);
 		
+		//Step 15:
 		//Mouse hover for logout
 		WebElement mouseHovEle = driver.findElement(By.xpath("//img[@src='themes/softed/images/user.PNG']"));
 		wdu.mouseHover(driver, mouseHovEle);
