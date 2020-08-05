@@ -14,11 +14,14 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
+import com.vtiger.objectrepositorylib.Login;
+
 public class BaseClass {
 	   public DataBaseLib dbLib = new DataBaseLib();
 	   public ExcelLib excelLib = new ExcelLib();
 	   public FileLib fLib = new FileLib();
 	   public WebDriverUtils wdu = new WebDriverUtils();
+	   public Login lg;
 	   public WebDriver driver = null;
 
 	
@@ -51,9 +54,8 @@ public class BaseClass {
 	{
 		/* Step 2: */
 		//Find username textbox and password text box
-		driver.findElement(By.name("user_name")).sendKeys(FileLib.readPropertyFile("username"));
-		driver.findElement(By.name("user_password")).sendKeys(FileLib.readPropertyFile("password"));
-		driver.findElement(By.id("submitButton")).click();
+		lg = new Login(driver);
+		lg.loginApp();
 	}
 	
 	@AfterMethod

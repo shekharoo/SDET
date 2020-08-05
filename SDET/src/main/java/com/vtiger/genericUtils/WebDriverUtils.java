@@ -60,7 +60,7 @@ public class WebDriverUtils {
 	 * @author SHEKHAR
 	 * @return int
 	 */
-	public static int randomFunc()
+	public int randomFunc()
 	{
 		Random r = new Random();
 		int no = r.nextInt(1000);
