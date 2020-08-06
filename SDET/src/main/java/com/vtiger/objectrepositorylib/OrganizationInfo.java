@@ -1,5 +1,5 @@
 package com.vtiger.objectrepositorylib;
 
-public class Organization {
+public class OrganizationInfo {
 
 }

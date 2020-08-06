@@ -8,10 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 public class CreateOrganization {
 	
 	 public WebDriver driver;
-		
-
-	@FindBy(xpath = "//img[@alt='Create Organization...']")
-	 private WebElement createOrgLink;
 	 
 	 @FindBy(name = "accountname")
 	 private WebElement orgNameTf;
@@ -46,10 +42,6 @@ public class CreateOrganization {
 		 PageFactory.initElements(driver, this);
 	 }
 	 
-	 public void createOrg()
-	 {
-		 createOrgLink.click();
-	 }
 	 public String orgName(String accName)
 	 {
 		orgNameTf.sendKeys(accName);

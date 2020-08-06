@@ -114,7 +114,7 @@ public class WebDriverUtils {
 	}
 	
 	/**
-	 * It is used to apply wait on an element and perform click operation.
+	 * It is used to apply wait on an element and perform click operation on another element.
 	 * @author SHEKHAR
 	 * @param driver
 	 * @param element
@@ -142,6 +142,35 @@ public class WebDriverUtils {
 
 	}
 	
+	/**
+	 * It is used to apply wait on an element and perform click operation on same element.
+	 * @author SHEKHAR
+	 * @param driver
+	 * @param element
+	 * @throws InterruptedException 
+	 */
+	public void waitAndClickElement(WebDriver driver,WebElement element) throws InterruptedException
+	{
+		//boolean flag = false;
+		int count=0;
+		while(count<30)
+		{
+		try {
+			if(element.isDisplayed())
+			{
+				element.click();
+			}
+				
+			//flag=true;
+			break;
+		} catch (Exception e) {
+			count++;
+			Thread.sleep(1000);
+		 }
+		}
+
+	}
+
 	
 	/**
 	 * It is used to apply explicit wait on Alert
@@ -172,30 +201,21 @@ public class WebDriverUtils {
 			System.out.println("Actual title is: "+ actTitle);
 		}
 	}
-	/**
-	 * It is used to switch to Parent Window.
+		/**This is used to switch window
 	 * @author SHEKHAR
-	 * @param pwh
+	 * @param expPageTitle
 	 */
-	public void switchWindowParent(String pwh)
+	public void switchWindow(String expPageTitle) 
 	{
-		driver.switchTo().window(pwh);
-		
-	}
-	/**This is used to switch child window
-	 * @author SHEKHAR
-	 * @param expTitle
-	 * @throws IOException
-	 */
-	public void switchWindow(String expTitle) throws IOException
-	{
-		String pwh = driver.getWindowHandle();
 		Set<String> whs = driver.getWindowHandles();
-		whs.remove(pwh);
 		for(String w:whs)
 		{
 			driver.switchTo().window(w);
-		    driver.findElement(By.name("search_text")).sendKeys(expTitle);
+			String currentPageTitle = driver.getTitle();
+		    if(currentPageTitle.contains(expPageTitle))
+		    {
+		    	break;
+		    }
 	    }
 		
 	}
