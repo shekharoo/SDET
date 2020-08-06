@@ -1,12 +1,9 @@
 package com.vtiger.genericUtils;
 
-import java.io.IOException;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -143,6 +140,36 @@ public class WebDriverUtils {
 	}
 	
 	/**
+	 * It is used to apply wait on an element and capture text on same element.
+	 * @author SHEKHAR
+	 * @param driver
+	 * @param element
+	 * @throws InterruptedException 
+	 */
+	public String waitAndCaptureText(WebDriver driver,WebElement element) throws InterruptedException
+	{
+		//boolean flag = false;
+		String actNoOrghText = null;
+		int count=0;
+		while(count<30)
+		{
+		try {
+			if(element.isDisplayed())
+			{
+				actNoOrghText = element.getText();
+			}
+				
+			//flag=true;
+			break;
+		} catch (Exception e) {
+			count++;
+			Thread.sleep(1000);
+		 }
+		}
+		return actNoOrghText;
+	}
+
+	/**
 	 * It is used to apply wait on an element and perform click operation on same element.
 	 * @author SHEKHAR
 	 * @param driver
@@ -170,7 +197,6 @@ public class WebDriverUtils {
 		}
 
 	}
-
 	
 	/**
 	 * It is used to apply explicit wait on Alert

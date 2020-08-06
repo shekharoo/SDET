@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.vtiger.genericUtils.WebDriverUtils;
 
 public class Organizations extends WebDriverUtils{
-	 
+
 	public WebDriver driver;
 	public Organizations(WebDriver driver)
 	{
@@ -31,16 +31,16 @@ public class Organizations extends WebDriverUtils{
 
 	@FindBy(name = "submit")
 	private WebElement searchNowOrg;
-	
+
 	@FindBy(name = "selected_id")
 	private WebElement selCheckBox;
-	
-	@FindBy(id = "bas_searchfield")
+
+	@FindBy(xpath = "//span[@class='genHeaderSmall']")
 	private WebElement noOrgText;
-	
+
 	@FindBy(linkText = "del")
 	private WebElement delButton;
-	
+
 	public WebElement getDelButton() {
 		return delButton;
 	}
@@ -84,12 +84,13 @@ public class Organizations extends WebDriverUtils{
 		delButton.click();
 		popUpAccept(driver);
 	}
-	public void verifyDeleteOrg(String orgName,String srchType) throws Throwable
+	public String verifyDeleteOrg(String orgName,String srchType) throws Throwable
 	{
 		searchTf.sendKeys(orgName);
 		orgSearchdropDown.sendKeys(srchType);
 		searchNowOrg.click();		
-		driverWait(driver, noOrgText);
+		return waitAndCaptureText(driver, noOrgText);
+
 	}
 
 
