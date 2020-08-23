@@ -268,8 +268,8 @@ public class WebDriverUtils {
 	}
 	
 	/**
-	 * used to dismiss Pop up
-	 * @param driver
+	 * This is used to dismiss Pop up
+	 * @param Webdriver driver
 	 * @author SHEKHAR
 	 */
 	public void popUpDismiss(WebDriver driver)
