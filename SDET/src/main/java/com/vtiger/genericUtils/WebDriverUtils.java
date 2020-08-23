@@ -277,4 +277,4 @@ public class WebDriverUtils {
 		Alert a = driver.switchTo().alert();
 		a.dismiss();
 	}
-}
+}//end of line
